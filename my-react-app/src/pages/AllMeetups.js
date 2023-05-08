@@ -1,4 +1,5 @@
 import Todo from "../components/custom-components/Todo";
+import MeetupList from "../components/meet-ups/MeetupList";
 
 
 const DUMMY_DATA = [
@@ -27,9 +28,7 @@ function AllMeetups() {
     <div>
       <h1>My APP</h1>
       <Todo text="Title" />
-      <ul>
-        {DUMMY_DATA.map((meetup) => (<li key={meetup.id}>{meetup.title}</li>))}
-      </ul>
+      <MeetupList meetups={DUMMY_DATA} />
     </div>
   );
 }
