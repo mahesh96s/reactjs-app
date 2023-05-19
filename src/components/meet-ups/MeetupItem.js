@@ -6,7 +6,7 @@ function MeetupItem(props) {
     <li className={classes.item}>
       <Card>
         <div className={classes.image}>
-          <img src={props.meetup.image} alt={props.meetup.title} />
+          <img src={props.meetup.imageUrl} alt={props.meetup.title} />
         </div>
         <div className={classes.content}>
           <h3>{props.meetup.title}</h3>

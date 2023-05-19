@@ -1,34 +1,41 @@
+import { useEffect, useState } from "react";
 import Todo from "../components/custom-components/Todo";
 import MeetupList from "../components/meet-ups/MeetupList";
 
-
-const DUMMY_DATA = [
-  {
-    id: 'm1',
-    title: 'This is a first meetup',
-    image:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jpg',
-    address: 'Meetupstreet 5, 12345 Meetup City',
-    description:
-      'This is a first, amazing meetup which you definitely should not miss. It will be a lot of fun!',
-  },
-  {
-    id: 'm2',
-    title: 'This is a second meetup',
-    image:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jpg',
-    address: 'Meetupstreet 5, 12345 Meetup City',
-    description:
-      'This is a first, amazing meetup which you definitely should not miss. It will be a lot of fun!',
-  },
-];
-
 function AllMeetups() {
+  const [isLoading, setIsLoading] = useState(false)
+  const [meetup, setMeetup] = useState([]);
+  useEffect(() => {
+    setIsLoading(true)
+    fetch(
+      "https://my-react-project-f842a-default-rtdb.firebaseio.com/meetups.json"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const meetupList = []
+        Object.keys(data).forEach(key => {
+          const meetup = {
+            id: key,
+            ...data[key]
+          }
+          meetupList.push(meetup)
+        });
+        setMeetup(meetupList)
+        setIsLoading(false)
+      });
+  }, []);
+
+  if (isLoading) {
+    <div>
+      Loading ....
+    </div>
+  }
+
   return (
     <div>
-      <h1>My APP</h1>
+      <h1>Welcome to react meetup</h1>
       <Todo text="Title" />
-      <MeetupList meetups={DUMMY_DATA} />
+      <MeetupList meetups={meetup} />
     </div>
   );
 }
