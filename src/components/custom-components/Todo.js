@@ -16,7 +16,7 @@ function Todo(props) {
   }
 
   return (
-    <div className="card">
+    <div className="first-card">
       <h2>{props.text}</h2>
       <div className="actions">
         <button className="btn btn--alt" onClick={addMethod}>
