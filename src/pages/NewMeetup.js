@@ -1,8 +1,12 @@
-import NewMeetupForm from "../components/meet-ups/NewMeetupForm";
+import { useState} from 'react'
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import MeetupErrorFallback from "../components/meet-ups/MeetupErrorFallback";
+import NewMeetupForm from "../components/meet-ups/NewMeetupForm";
+import {ErrorBoundary} from 'react-error-boundary'
 
 function NewMeetup() {
   const history = useHistory()
+  const [resetFlag, setResetFlag] = useState(1)
 
   function addMeetup(meetup) {
     fetch(
@@ -15,13 +19,22 @@ function NewMeetup() {
         },
       }
     ).then(() => {
+      setResetFlag(1);
       history.replace('/')
+    }).catch((error) => {
+      throw error
     });
+  }
+
+  function handleReset () {
+    setResetFlag(0);
   }
 
   return (
     <div>
-      <NewMeetupForm onAddMeetup={addMeetup} />
+      <ErrorBoundary key={resetFlag} FallbackComponent={MeetupErrorFallback} onReset={handleReset}>
+        <NewMeetupForm onAddMeetup={addMeetup} />
+      </ErrorBoundary>
     </div>
   );
 }

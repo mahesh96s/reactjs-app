@@ -43,3 +43,14 @@
   .actions button:active {
     background-color: #ffe2ed;
   }
+
+  .active {
+    color: green;
+  }
+  .inactive {
+    color: gray;
+  }
+  .active,.inactive {
+    text-align: center;
+    padding: 1rem;
+  }

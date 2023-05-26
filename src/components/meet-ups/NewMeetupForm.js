@@ -1,12 +1,20 @@
 import classes from "./NewMeetupForm.module.css";
 import Card from "../ui/Card";
 import { useRef } from "react";
+import ToggleButton from "../custom-components/ToggleButton";
+import { useState } from "react";
 
 function NewMeetupForm(props) {
   const titleRef = useRef();
   const imageUrlRef = useRef();
   const addressRef = useRef();
   const descriptionRef = useRef();
+  const [checked, setChecked] = useState(false)
+
+  function onChange(newValue) {
+    setChecked(newValue);
+  }
+
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -14,7 +22,8 @@ function NewMeetupForm(props) {
         title: titleRef.current.value,
         imageUrl: imageUrlRef.current.value,
         address: addressRef.current.value,
-        description:descriptionRef.current.value
+        description:descriptionRef.current.value,
+        active: checked
     }
     props.onAddMeetup(meetup)
   }
@@ -39,6 +48,7 @@ function NewMeetupForm(props) {
           <label htmlFor="description">Description</label>
           <textarea id="description" row="5" ref={descriptionRef} required></textarea>
         </div>
+        <ToggleButton id="toggleSwitch" name="Active Meetup" optionLabels={['Active', 'Inactive']} checked={checked} onChange={onChange} />
         <div className={classes.actions}>
           <button>Add Meetup</button>
         </div>
